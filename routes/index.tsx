@@ -5,19 +5,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Fresh App</title>
+        <title>Car Parking History</title>
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md">
-        <img
-          src="/logo.svg"
-          class="w-32 h-32"
-          alt="the fresh logo: a sliced lemon dripping with juice"
-        />
-        <p class="my-6">
-          Welcome to `fresh`. Try updating this message in the ./routes/index.tsx
-          file, and refresh. Steve Jeong. Sooni Park
+      <div class="p-4 mx-auto max-w-screen-md border-solid border-4 border-indigo-600 rounded">
+        <p class="my-2 text-xl text-blue-600 font-bold">
+          차량 주차 위치 이력
         </p>
-        <Counter start={3} />
+        
       </div>
     </>
   );
