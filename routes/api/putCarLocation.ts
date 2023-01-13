@@ -7,12 +7,13 @@ export const handler: Handlers = {
     // Insert DB
     // console.log('POST req : ', req);
     const body = await req.json();
-    console.log('POST body :', body);
+    // console.log('POST body :', body);
     if (body.location === '') return new Response(null)
     const newLocation = await cars.insertOne({
       location: body.location,
       username: body.username,
       saveDate: body.saveDate,
     });
+    return new Response(newLocation)
   }
 }

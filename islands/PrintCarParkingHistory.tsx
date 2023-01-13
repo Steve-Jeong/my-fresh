@@ -1,23 +1,40 @@
 import { signal } from "@preact/signals";
-import { useEffect } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import { carParkLocation, count } from "./PutCarLocation.tsx";
 
-export const firstTime = signal(false)
+export const oneTime = signal(true)
+
+type CarLocationType = {
+  location:string;
+  username:string;
+  saveDate:Date;
+}
 
 export default function PrintCarParkingHistory() {
+  const [carLocations, setCarLocations] = useState<CarLocationType[]>([{}])
   useEffect(() => {
     async function readFromDB() {
       const res = await fetch("/api/readCarLocation");
+      console.log('res in PrintCarParkingHistory : ', res)
       if(res.status === 404){
         console.log('PrintCarLocation res.status === 404')
       } else {
-        const data = await res.json();
-        console.log('PrintCarLocation useEffect data : ', data);
+        try {
+          const data = await res.json();
+          console.log('PrintCarLocation useEffect data : ', data);
+          const carArray = Array.from(data)
+          console.log('carArrary in PrintCarParkingHistory : ', carArray);
+          setCarLocations(carArray)
+          console.log('carLocations : ', carLocations)
+        } catch(err) {
+          console.log('err in PrintCarParkingHistory : ', err);
+        }
       }
+
       // const data = await res.json()   // this line makes error
     }
     readFromDB()
-  }, [firstTime]);
+  }, [oneTime]);
 
   return (
     <div class="flex flex-1">
@@ -27,7 +44,7 @@ export default function PrintCarParkingHistory() {
         </p>
         <div class="flex flex-col justify-center" id="printHistory">
           Car Parking Location : {carParkLocation.value.location}
-          <div>count : {count.value} </div>
+          {/* <div>count : {count.value} </div> */}
         </div>
       </div>
     </div>

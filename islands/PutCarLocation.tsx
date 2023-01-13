@@ -37,7 +37,7 @@ export default function PutCarLocation() {
       }
       // const data = await res.json()   // this line makes error
     }
-    saveToDB()
+    saveToDB();
   }, [selected]);
 
   function handleChange(e) {
