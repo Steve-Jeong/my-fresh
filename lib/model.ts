@@ -15,22 +15,30 @@ const { MONGO_SERVER_HOST, MONGO_PORT, MONGO_DB, MONGO_USERNAME, MONGO_PASSWORD 
 // console.log('MONGO_SERVER_HOST : ', MONGO_SERVER_HOST);
 
 // Connecting to a Mongo Atlas Database
-await client.connect({
-  db: MONGO_DB,
-  tls: true,
-  servers: [
-    {
-      host: MONGO_SERVER_HOST,
-      port: Number(MONGO_PORT),
-    },
-  ],
-  credential: {
-    username: MONGO_USERNAME,
-    password: MONGO_PASSWORD,
-    db: MONGO_DB,
-    mechanism: "SCRAM-SHA-1",
-  },
-});
+// await client.connect({
+//   db: MONGO_DB,
+//   tls: true,
+//   servers: [
+//     {
+//       host: MONGO_SERVER_HOST,
+//       port: Number(MONGO_PORT),
+//     },
+//   ],
+//   credential: {
+//     username: MONGO_USERNAME,
+//     password: MONGO_PASSWORD,
+//     db: MONGO_DB,
+//     mechanism: "SCRAM-SHA-1",
+//   },
+// });
+
+
+// Connect using srv url
+await client.connect(
+  `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.dszjj.mongodb.net/test123?authMechanism=SCRAM-SHA-1`,
+);
+
+
 // await client.connect("mongodb://127.0.0.1:27017");
 console.log("mongo atlas connected.");
 
