@@ -1,22 +1,50 @@
-import {useState, useEffect} from 'preact/hooks'
-import { signal, computed, effect, batch } from "@preact/signals";
+import { useEffect, useState } from "preact/hooks";
+import { batch, computed, effect, signal } from "@preact/signals";
 
-export const carParkLocation = signal('');
+export type carParkLocationType = {
+  location: string;
+  username: string;
+  saveDate: number;
+}
+
+export const carParkLocation = signal({
+  location: '',
+  username:'',
+  saveDate: new Date()
+});
+
+export const count = signal(12)
 
 export default function PutCarLocation() {
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState("");
   useEffect(() => {
-    console.log('useEffect selected : ', selected)
-    carParkLocation.value = selected
-    console.log('useEffect count.value : ', carParkLocation.value)
-  }, [selected])
-  
+    // console.log("useEffect selected : ", selected);
+    count.value++;
+    carParkLocation.value.location = selected;
+    carParkLocation.value.username = 'Steve Jeong';
+    carParkLocation.value.saveDate = new Date();
+    console.log("useEffect carParkLocation : ", carParkLocation.value);
+    async function saveToDB() {
+      const res = await fetch("/api/putCarLocation", { 
+        method: "POST",
+        body: JSON.stringify(carParkLocation.value),
+      });
+      if(res.status === 404){
+        console.log('PutCarLocation res.status === 404')
+      } else {
+        const data = await res.json();
+        console.log('useEffect data : ', data);
+      }
+      // const data = await res.json()   // this line makes error
+    }
+    saveToDB()
+  }, [selected]);
 
   function handleChange(e) {
-    setSelected((prev) => prev = e.target.value)
-    carParkLocation.value = selected
-    console.log('handleChange selected : ', selected)
-    console.log('handleChange count.value : ', carParkLocation.value)
+    setSelected((prev) => prev = e.target.value);
+    
+    // console.log("handleChange selected : ", selected);
+    // console.log("handleChange carParkLocation : ", carParkLocation.value);
   }
 
   return (

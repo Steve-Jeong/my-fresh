@@ -11,8 +11,8 @@ interface UserSchema {
 console.log("mongo atlas connecting...");
 
 const client = new MongoClient();
-const {MONGO_SERVER_HOST, MONGO_PORT, MONGO_DB, MONGO_USERNAME, MONGO_PASSWORD}  = await load({ envPath: "./.env" });  // .env filepath is from the root directory
-console.log('MONGO_SERVER_HOST : ', MONGO_SERVER_HOST);
+const { MONGO_SERVER_HOST, MONGO_PORT, MONGO_DB, MONGO_USERNAME, MONGO_PASSWORD } = await load();  // .env filepath is from the root directory { envPath: "./.env" }
+// console.log('MONGO_SERVER_HOST : ', MONGO_SERVER_HOST);
 
 // Connecting to a Mongo Atlas Database
 await client.connect({
@@ -35,4 +35,4 @@ await client.connect({
 console.log("mongo atlas connected.");
 
 const db = client.database("test123");
-export const users = db.collection<UserSchema>("users");
+export const cars = db.collection("cars");
