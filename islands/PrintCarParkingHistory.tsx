@@ -11,30 +11,35 @@ type CarLocationType = {
 }
 
 export default function PrintCarParkingHistory() {
-  const [carLocations, setCarLocations] = useState<CarLocationType[]>([{}])
+  const [carLocations, setCarLocations] = useState([])
+  const [printCarLocations, setPrintCarLocations] = useState([])
+  const [done, setDone] = useState(false)
   useEffect(() => {
     async function readFromDB() {
       const res = await fetch("/api/readCarLocation");
-      console.log('res in PrintCarParkingHistory : ', res)
+      // console.log('res in PrintCarParkingHistory : ', res)
       if(res.status === 404){
         console.log('PrintCarLocation res.status === 404')
       } else {
         try {
-          const data = await res.json();
-          console.log('PrintCarLocation useEffect data : ', data);
-          const carArray = Array.from(data)
-          console.log('carArrary in PrintCarParkingHistory : ', carArray);
-          setCarLocations(carArray)
-          console.log('carLocations : ', carLocations)
+          const carArray = await res.json();
+          setDone(true)
+          // console.log('carArrary in PrintCarParkingHistory : ', carArray);
+          // console.log('before carLocations in PrintCarParkingHistory : ', carLocations);
+          setCarLocations((prev)=>{
+            console.log('before sort : ', carArray);
+            carArray.sort((a,b)=>{if(Date.parse(a.saveDate) - Date.parse(b.saveDate) > 0) return -1})
+            console.log('after sort : ', carArray);
+            return [...carArray]
+          })
+          console.log('after carLocations : ', carLocations)
         } catch(err) {
           console.log('err in PrintCarParkingHistory : ', err);
         }
       }
-
-      // const data = await res.json()   // this line makes error
     }
     readFromDB()
-  }, [oneTime]);
+  }, [done]);
 
   return (
     <div class="flex flex-1">
@@ -42,9 +47,11 @@ export default function PrintCarParkingHistory() {
         <p class="my-2 text-xl text-blue-600 font-bold">
           차량 주차 위치 이력
         </p>
-        <div class="flex flex-col justify-center" id="printHistory">
-          Car Parking Location : {carParkLocation.value.location}
+        <div class="flex flex-col items-center" id="printHistory">
+          {/* Car Parking Location : {carParkLocation.value.location} */}
           {/* <div>count : {count.value} </div> */}
+          {/* {carLocations.map((car)=><div>{JSON.stringify(car)}</div>)} */}
+          {carLocations.map((car, index)=><div class="mt-2">{index} : {new Date(car.saveDate).toLocaleString("ko-Kr")} : {car.location}</div>)}
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@ export default function PutCarLocation() {
     carParkLocation.value.location = selected;
     carParkLocation.value.username = 'Steve Jeong';
     carParkLocation.value.saveDate = new Date();
-    console.log("useEffect carParkLocation : ", carParkLocation.value);
+    console.log("useEffect in PutCarLocation : ", carParkLocation.value);
     async function saveToDB() {
       const res = await fetch("/api/putCarLocation", { 
         method: "POST",

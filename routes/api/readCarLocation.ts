@@ -10,7 +10,7 @@ export const handler: Handlers = {
       if(index>0 && all_cars.length>1) { return car.saveDate !== all_cars[index-1].saveDate}
       else {return true}
     })
-    console.log("all cars location : ", new_cars);  
+    // console.log("all cars location : ", new_cars);  
     return new Response(JSON.stringify(new_cars))
   }
 }
