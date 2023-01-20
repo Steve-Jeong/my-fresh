@@ -14,6 +14,23 @@ export const handler: Handlers = {
       username: body.username,
       saveDate: body.saveDate,
     });
+
+    let lastId=0;
+    const maxNumberOfDocument = 10
+    const last = await cars.find().sort({_id:-1}).skip(maxNumberOfDocument).limit(1)
+    if(last != null) {
+      for await (const doc of last) {
+        console.log(doc._id);
+        lastId=doc._id
+      }
+    }
+    if(lastId != 0) {
+      // console.log('lastId : ', lastId)
+      await cars.deleteMany({_id:{$lt:lastId}})
+    }
+
+    
+    // console.log('car lists', lists)
     return new Response(newLocation)
   }
 }
