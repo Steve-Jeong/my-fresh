@@ -13,6 +13,6 @@ import twindConfig from "./twind.config.ts";
 import { cars } from './lib/model.ts'
 export { cars }
 
-await start(manifest, { plugins: [twindPlugin(twindConfig)], port: 5001 });
+await start(manifest, { plugins: [twindPlugin(twindConfig)], port: 5123 });
 
 
