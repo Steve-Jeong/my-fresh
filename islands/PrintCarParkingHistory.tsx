@@ -12,18 +12,14 @@ type CarLocationType = {
 
 export default function PrintCarParkingHistory() {
   const [carLocations, setCarLocations] = useState([])
-  const [printCarLocations, setPrintCarLocations] = useState([])
-  const [done, setDone] = useState(false)
   useEffect(() => {
     async function readFromDB() {
-      const res = await fetch("/api/readCarLocation");
-      // console.log('res in PrintCarParkingHistory : ', res)
+      const res = await fetch("/api/readCarLocation")
       if(res.status === 404){
-        console.log('PrintCarLocation res.status === 404')
+        console.log('ReadCarLocation res.status === 404')
       } else {
         try {
           const carArray = await res.json();
-          setDone(true)
           // console.log('carArrary in PrintCarParkingHistory : ', carArray);
           // console.log('before carLocations in PrintCarParkingHistory : ', carLocations);
           setCarLocations((prev)=>{
@@ -38,8 +34,8 @@ export default function PrintCarParkingHistory() {
         }
       }
     }
-    readFromDB()
-  }, [done]);
+    readFromDB();
+  }, [count.value]);
 
   return (
     <div class="flex flex-1">

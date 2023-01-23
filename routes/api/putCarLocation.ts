@@ -7,8 +7,11 @@ export const handler: Handlers = {
     // Insert DB
     // console.log('POST req : ', req);
     const body = await req.json();
-    // console.log('POST body :', body);
-    if (body.location === '') return new Response(null)
+    console.log('POST body :', body);
+    if (body.location === '') {
+      console.log('body.location is null')
+      return new Response(null)
+    }
     const newLocation = await cars.insertOne({
       location: body.location,
       username: body.username,
@@ -20,7 +23,7 @@ export const handler: Handlers = {
     const last = await cars.find().sort({_id:-1}).skip(maxNumberOfDocument).limit(1)
     if(last != null) {
       for await (const doc of last) {
-        console.log(doc._id);
+        // console.log('last id : ', doc._id);
         lastId=doc._id
       }
     }
@@ -28,9 +31,8 @@ export const handler: Handlers = {
       // console.log('lastId : ', lastId)
       await cars.deleteMany({_id:{$lt:lastId}})
     }
-
     
-    // console.log('car lists', lists)
+    console.log('car newLocation : ', newLocation)
     return new Response(newLocation)
   }
 }

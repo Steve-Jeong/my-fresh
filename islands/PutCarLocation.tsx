@@ -19,21 +19,25 @@ export default function PutCarLocation() {
   const [selected, setSelected] = useState("");
   useEffect(() => {
     // console.log("useEffect selected : ", selected);
-    count.value++;
     carParkLocation.value.location = selected;
     carParkLocation.value.username = 'Steve Jeong';
     carParkLocation.value.saveDate = new Date();
     console.log("useEffect in PutCarLocation : ", carParkLocation.value);
+
     async function saveToDB() {
+      // console.log('inside saveToDB')
       const res = await fetch("/api/putCarLocation", { 
         method: "POST",
         body: JSON.stringify(carParkLocation.value),
       });
-      if(res.status === 404){
-        console.log('PutCarLocation res.status === 404')
+      console.log('after fetch');
+      if(res.ok){
+        // console.log('before res.text()')
+        const data = await res.text();
+        // console.log('useEffect put car data : ', data);
+        count.value++;  // to give signal to PrintCarLocation function
       } else {
-        const data = await res.json();
-        console.log('useEffect data : ', data);
+        console.log('PutCarLocation res.status === 404')
       }
       // const data = await res.json()   // this line makes error
     }
@@ -41,7 +45,7 @@ export default function PutCarLocation() {
   }, [selected]);
 
   function handleChange(e) {
-    setSelected((prev) => prev = e.target.value);
+    setSelected((prev) => e.target.value);
     
     // console.log("handleChange selected : ", selected);
     // console.log("handleChange carParkLocation : ", carParkLocation.value);
