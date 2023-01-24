@@ -54,9 +54,12 @@ export default function PutCarLocation() {
   return (
     <div>
       <div class="p-2 mt-2 mx-auto max-w-screen-md border-solid border-4 border-indigo-600 rounded">
-        <p class="my-2 text-xl text-blue-600 font-bold">
-          차량 주차 위치 지정
-        </p>
+        <div class="flex justify-between">
+          <p class="my-2 text-xl text-blue-600 font-bold">
+            차량 주차 위치 지정
+          </p>
+          
+        </div>
         <div onChange={handleChange} class="flex justify-center">
           <div class="flex flex-auto justify-center">
             <input
