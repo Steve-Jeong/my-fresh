@@ -3,19 +3,25 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/api/putCarLocation.ts";
-import * as $1 from "./routes/api/readCarLocation.ts";
-import * as $2 from "./routes/index.tsx";
-import * as $3 from "./routes/test.tsx";
+import * as $0 from "./routes/api/login.ts";
+import * as $1 from "./routes/api/putCarLocation.ts";
+import * as $2 from "./routes/api/readCarLocation.ts";
+import * as $3 from "./routes/index.tsx";
+import * as $4 from "./routes/login.tsx";
+import * as $5 from "./routes/logout.ts";
+import * as $6 from "./routes/test.tsx";
 import * as $$0 from "./islands/PrintCarParkingHistory.tsx";
 import * as $$1 from "./islands/PutCarLocation.tsx";
 
 const manifest = {
   routes: {
-    "./routes/api/putCarLocation.ts": $0,
-    "./routes/api/readCarLocation.ts": $1,
-    "./routes/index.tsx": $2,
-    "./routes/test.tsx": $3,
+    "./routes/api/login.ts": $0,
+    "./routes/api/putCarLocation.ts": $1,
+    "./routes/api/readCarLocation.ts": $2,
+    "./routes/index.tsx": $3,
+    "./routes/login.tsx": $4,
+    "./routes/logout.ts": $5,
+    "./routes/test.tsx": $6,
   },
   islands: {
     "./islands/PrintCarParkingHistory.tsx": $$0,

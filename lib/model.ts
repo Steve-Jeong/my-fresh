@@ -1,5 +1,5 @@
 import { load } from "https://deno.land/std@0.170.0/dotenv/mod.ts";
-import { Bson, MongoClient, ObjectId } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
+import { Bson as _Bson, MongoClient, ObjectId as _ObjectId } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 
 // Defining schema interface
 interface UserSchema {
@@ -11,7 +11,7 @@ interface UserSchema {
 console.log("mongo atlas connecting...");
 
 const client = new MongoClient();
-const { MONGO_SERVER_HOST, MONGO_PORT, MONGO_DB, MONGO_USERNAME, MONGO_PASSWORD } = await load();  // .env filepath is from the root directory { envPath: "./.env" }
+const { _MONGO_SERVER_HOST, _MONGO_PORT, _MONGO_DB, MONGO_USERNAME, MONGO_PASSWORD } = await load();  // .env filepath is from the root directory { envPath: "./.env" }
 // console.log('MONGO_SERVER_HOST : ', MONGO_SERVER_HOST);
 
 // Connecting to a Mongo Atlas Database
@@ -42,5 +42,5 @@ await client.connect(
 // await client.connect("mongodb://127.0.0.1:27017");
 console.log("mongo atlas connected.");
 
-const db = client.database("test123");
+const db = client.database("test456");  // for testing use "test456", for deploy use "test123"
 export const cars = db.collection("cars");
